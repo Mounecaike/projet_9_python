@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Connexion{% endblock %}
+{% block content %}
+  <h1>Connexion</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <p>
+      <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label><br>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </p>
+
+    <p>
+      <label for="{{ form.password.id_for_label }}">Mot de passe</label><br>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </p>
+
+    <button type="submit">Se connecter</button>
+  </form>
+
+  <p>Pas encore de compte ? <a href="{% url 'accounts:signup' %}">S’inscrire</a></p>
+{% endblock %}

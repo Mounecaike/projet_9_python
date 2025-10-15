@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Inscription{% endblock %}
+{% block content %}
+  <h1>Inscription</h1>
+
+  {% if messages %}
+    <ul>
+      {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <p>
+      <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label><br>
+      {{ form.username }}
+    </p>
+
+    <p>
+      <label for="{{ form.password1.id_for_label }}">Mot de passe</label><br>
+      {{ form.password1 }}
+    </p>
+
+    <p>
+      <label for="{{ form.password2.id_for_label }}">Confirmer le mot de passe</label><br>
+      {{ form.password2 }}
+    </p>
+
+    <button type="submit">S’inscrire</button>
+  </form>
+
+  <p>Déjà un compte ? <a href="{% url 'accounts:login' %}">Se connecter</a></p>
+{% endblock %}
