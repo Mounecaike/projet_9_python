@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h1>Créer une critique</h1>
+
+  <p>Ticket lié : <strong>{{ ticket.title }}</strong></p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Publier la critique</button>
+  </form>
+
+{% endblock %}

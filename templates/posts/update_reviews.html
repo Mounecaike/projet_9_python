@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Modifier la critique</h1>
+
+  <p>Ticket lié : <strong>{{ ticket.title }}</strong></p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enregistrer</button>
+  </form>
+
+  <hr>
+
+  <form action="{% url 'posts:delete_review' review.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit" style="background:red;color:white;">Supprimer cette critique</button>
+  </form>
+{% endblock %}

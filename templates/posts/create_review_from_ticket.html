@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Créer une critique pour ce ticket</h2>
+
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+    <h3>{{ ticket.title }}</h3>
+    <p>{{ ticket.description }}</p>
+    <small>Posté par {{ ticket.user.username }}</small>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Publier la critique</button>
+  </form>
+{% endblock %}
