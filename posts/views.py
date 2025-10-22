@@ -1,5 +1,5 @@
 from itertools import chain
-
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
@@ -15,6 +15,7 @@ def create_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
+            messages.success(request, "Votre ticket a bien été créé !")
             return redirect('posts:create_ticket')
     else:
         form = TicketForm()
@@ -31,6 +32,7 @@ def update_ticket(request, pk):
         form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             form.save()
+            messages.success(request, "Votre ticket a bien été modifié.")
             return redirect('posts:create_ticket')  # temporaire, le feed viendra plus tard
     else:
         form = TicketForm(instance=ticket)
@@ -43,6 +45,7 @@ def delete_ticket(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     if ticket.user == request.user:
         ticket.delete()
+        messages.success(request, "Votre ticket a bien été supprimé")
     return redirect("posts:create_ticket")
 
 @login_required
@@ -56,7 +59,8 @@ def create_review(request, ticket_id):
             review.ticket = ticket
             review.user = request.user
             review.save()
-            return redirect('posts:create_ticket')  # redirection temporaire
+            messages.success(request, "Critique publiée avec succès.")
+            return redirect('posts:feed')
     else:
         form = ReviewForm()
 
@@ -67,13 +71,13 @@ def update_review(request, pk):
     review = get_object_or_404(Review, pk=pk)
 
     if review.user != request.user:
-        return redirect('posts:create_ticket')  # ou vers une page d’erreur plus tard
+        return redirect('posts:create_ticket')
 
     if request.method == "POST":
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
             form.save()
-            return redirect('posts:create_ticket')  # temporaire
+            return redirect('posts:feed')
     else:
         form = ReviewForm(instance=review)
 
@@ -89,6 +93,7 @@ def delete_review(request, pk):
     review = get_object_or_404(Review, pk=pk)
     if review.user == request.user:
         review.delete()
+        messages.success(request, "Critique supprimée.")
     return redirect("posts:create_ticket")
 
 @login_required
@@ -117,7 +122,7 @@ def create_review_from_ticket(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect("posts:feed")  # redirection vers le flux
+            return redirect("posts:feed")
     else:
         form = ReviewForm()
 
