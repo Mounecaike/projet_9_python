@@ -50,7 +50,7 @@ def delete_ticket(request, pk):
 
 @login_required
 def create_review(request, ticket_id):
-    ticket = get_object_or_404(Ticket, id=ticket_id)
+    ticket = Ticket.objects.filter(id=ticket_id).first() if ticket_id else None
 
     if request.method == "POST":
         form = ReviewForm(request.POST)
@@ -130,3 +130,10 @@ def create_review_from_ticket(request, ticket_id):
         "form": form,
         "ticket": ticket
     })
+
+@login_required
+def my_posts(request):
+    tickets = Ticket.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user)
+    posts = sorted(chain(tickets, reviews), key=lambda p: p.time_created, reverse=True)
+    return render(request, "posts/my_posts.html", {"posts": posts})

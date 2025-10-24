@@ -1,0 +1,145 @@
+/* === STYLE GLOBAL === */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f6f7fb;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+/* === HEADER & NAVIGATION === */
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 15px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+nav a:hover {
+    background-color: #444;
+}
+
+/* === CONTENU PRINCIPAL === */
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* === TITRES === */
+h1, h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* === FORMULAIRES === */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input, textarea, select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4a6cf7;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #3454d1;
+}
+
+/* === ALERTES / MESSAGES === */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 10px auto;
+    max-width: 600px;
+}
+
+.messages li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.messages li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* === BLOCS DE TICKET / REVIEW === */
+.ticket, .review {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fafafa;
+}
+
+.review {
+    border-style: dashed;
+    background-color: #f3f3f3;
+}
+
+/* === PAGE ACCUEIL (home.html) === */
+.home-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.home-container div {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}

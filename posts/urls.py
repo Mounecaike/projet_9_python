@@ -6,6 +6,7 @@ app_name = 'posts'
 
 urlpatterns = [
     path('feed/', views.feed, name='feed'),
+    path('mine/', views.my_posts, name='mine'),
     path('create/', views.create_ticket, name='create_ticket'),
     path('update/<int:pk>/', views.update_ticket, name='update_ticket'),
     path('delete/<int:pk>/',views.delete_ticket, name='delete_ticket'),

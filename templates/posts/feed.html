@@ -1,21 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>📰 Votre flux</h2>
 
+<main>
+  <!-- === HEADER DU FLUX === -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h2>📰 Votre flux</h2>
+    <form method="post" action="{% url 'accounts:logout' %}" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" class="btn">Se déconnecter</button>
+    </form>
+  </div>
+
+  <!-- === BOUTONS D’ACTION === -->
+  <div style="display:flex; gap:15px; justify-content:center; margin-bottom:30px;">
+    <a href="{% url 'posts:create_ticket' %}" class="btn">🎟️ Demander une critique</a>
+    <a href="{% url 'posts:create_review' ticket_id=0 %}" class="btn">📝 Créer une critique</a>
+  </div>
+
+  <!-- === FLUX DES POSTS === -->
   {% for post in posts %}
     {% if post.title %}
-      <!-- 🎟️ Ticket seul -->
-      <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+      <!-- 🎟️ Ticket -->
+      <div class="ticket">
         <h3>🎟️ {{ post.title }}</h3>
         <p>{{ post.description }}</p>
-        <small>par {{ post.user.username }} — {{ post.time_created }}</small>
-        <a href="{% url 'posts:create_review_from_ticket' post.id %}">✍️ Écrire une critique</a>
+        <small>par {{ post.user.username }} — {{ post.time_created }}</small><br>
+        <a href="{% url 'posts:create_review_from_ticket' post.id %}" class="btn">✍️ Écrire une critique</a>
 
-
-        <!-- Vérifie si le ticket a une review -->
         {% for review in post.review_set.all %}
-          <div style="border:1px dashed #aaa; margin-top:10px; padding:8px; background:#f9f9f9;">
-            <h4>📝 Critique associée : {{ review.headline }}</h4>
+          <div class="review">
+            <h4>📝 Critique : {{ review.headline }}</h4>
             <p>{{ review.body }}</p>
             <small>par {{ review.user.username }}</small>
           </div>
@@ -25,14 +39,14 @@
       </div>
 
     {% elif post.headline %}
-      <!-- 📝 Review seule (au cas où son ticket n’est pas dans le feed) -->
-      <div style="border:1px solid #aaa; background:#f8f8f8; padding:10px; margin-bottom:10px;">
+      <!-- 📝 Review -->
+      <div class="review">
         <h3>📝 {{ post.headline }}</h3>
         <p>{{ post.body }}</p>
         <small>par {{ post.user.username }} — {{ post.time_created }}</small>
 
         {% if post.ticket %}
-          <div style="border:1px dashed #ccc; margin-top:10px; padding:8px;">
+          <div class="ticket" style="margin-top:10px;">
             <strong>Répond à :</strong> {{ post.ticket.title }}
           </div>
         {% endif %}
@@ -41,4 +55,6 @@
   {% empty %}
     <p>Aucun contenu à afficher.</p>
   {% endfor %}
+</main>
+
 {% endblock %}
