@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h2>📚 Vos posts</h2>
+
+  {% if posts %}
+    {% for post in posts %}
+      {% if post.title %}
+        <!-- 🎟️ Ticket -->
+        <div class="ticket">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.description }}</p>
+          <small>Créé le {{ post.time_created }}</small><br>
+
+          <a href="{% url 'posts:update_ticket' post.id %}" class="btn">Modifier</a>
+          <form method="post" action="{% url 'posts:delete_ticket' post.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+          </form>
+
+          {% for review in post.review_set.all %}
+            <div class="review">
+              <h4>Critique : {{ review.headline }}</h4>
+              <p>{{ review.body }}</p>
+              <small>Créée le {{ review.time_created }}</small><br>
+              <a href="{% url 'posts:update_review' review.id %}" class="btn">Modifier</a>
+              <form method="post" action="{% url 'posts:delete_review' review.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+
+      {% elif post.headline %}
+        <!-- 📝 Review seule -->
+        <div class="review">
+          <h3>{{ post.headline }}</h3>
+          <p>{{ post.body }}</p>
+          <small>Créée le {{ post.time_created }}</small><br>
+
+          <a href="{% url 'posts:update_review' post.id %}" class="btn">Modifier</a>
+          <form method="post" action="{% url 'posts:delete_review' post.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+          </form>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>Vous n’avez encore rien publié.</p>
+  {% endif %}
+
+{% endblock %}

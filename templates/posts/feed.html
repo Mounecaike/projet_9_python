@@ -1,15 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-
-<main>
   <!-- === HEADER DU FLUX === -->
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
     <h2>📰 Votre flux</h2>
-    <form method="post" action="{% url 'accounts:logout' %}" style="margin:0;">
-      {% csrf_token %}
-      <button type="submit" class="btn">Se déconnecter</button>
-    </form>
-  </div>
 
   <!-- === BOUTONS D’ACTION === -->
   <div style="display:flex; gap:15px; justify-content:center; margin-bottom:30px;">
@@ -24,6 +16,9 @@
       <div class="ticket">
         <h3>🎟️ {{ post.title }}</h3>
         <p>{{ post.description }}</p>
+        {% if post.image %}
+          <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-ticket">
+        {% endif %}<br>
         <small>par {{ post.user.username }} — {{ post.time_created }}</small><br>
         <a href="{% url 'posts:create_review_from_ticket' post.id %}" class="btn">✍️ Écrire une critique</a>
 
@@ -55,6 +50,6 @@
   {% empty %}
     <p>Aucun contenu à afficher.</p>
   {% endfor %}
-</main>
+
 
 {% endblock %}

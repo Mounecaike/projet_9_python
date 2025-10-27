@@ -9,7 +9,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128, default="")
     description = TextField(max_length=2048, blank=True)
     user = ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = ImageField(null=True, blank=True)
+    image = ImageField(upload_to="tickets/", null=True, blank=True)
     time_created = DateTimeField(auto_now_add=True)
 
     def __str__(self):

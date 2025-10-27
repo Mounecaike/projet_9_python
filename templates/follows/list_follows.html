@@ -2,20 +2,34 @@
 {% block content %}
   <h2>Utilisateurs que vous suivez</h2>
 
-  <ul>
-    {% for follow in follows %}
-      <li>
-        {{ follow.followed_user.username }}
-        <form action="{% url 'follows:delete_follow' follow.id %}" method="post" style="display:inline;">
-          {% csrf_token %}
-          <button type="submit">Se désabonner</button>
-        </form>
-      </li>
-    {% empty %}
-      <li>Vous ne suivez encore personne.</li>
-    {% endfor %}
-  </ul>
+<ul>
+  {% for follow in follows %}
+    <li style="margin-bottom:15px">
+      {{ follow.followed_user.username }}
 
+      <!-- Désabonnement -->
+      <form method="post" action="{% url 'follows:delete_follow' follow.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Se désabonner</button>
+      </form>
+
+      <!-- Blocage / Déblocage -->
+      {% if follow.followed_user.id in blocked_users %}
+        <form method="post" action="{% url 'follows:unblock_user' follow.followed_user.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">Débloquer</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'follows:block_user' follow.followed_user.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-warning">Bloquer</button>
+        </form>
+      {% endif %}
+    </li>
+  {% empty %}
+    <p>Vous ne suivez encore personne.</p>
+  {% endfor %}
+</ul>
   <hr>
 
   <h3>Suivre un nouvel utilisateur</h3>

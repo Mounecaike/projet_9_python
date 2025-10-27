@@ -16,7 +16,7 @@ def create_ticket(request):
             ticket.user = request.user
             ticket.save()
             messages.success(request, "Votre ticket a bien été créé !")
-            return redirect('posts:create_ticket')
+            return redirect('posts:feed')
     else:
         form = TicketForm()
     return render(request, "posts/create_ticket.html", {"form": form})
@@ -33,7 +33,7 @@ def update_ticket(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Votre ticket a bien été modifié.")
-            return redirect('posts:create_ticket')  # temporaire, le feed viendra plus tard
+            return redirect('posts:feed')
     else:
         form = TicketForm(instance=ticket)
 
@@ -46,7 +46,7 @@ def delete_ticket(request, pk):
     if ticket.user == request.user:
         ticket.delete()
         messages.success(request, "Votre ticket a bien été supprimé")
-    return redirect("posts:create_ticket")
+    return redirect("posts:feed")
 
 @login_required
 def create_review(request, ticket_id):
@@ -94,7 +94,7 @@ def delete_review(request, pk):
     if review.user == request.user:
         review.delete()
         messages.success(request, "Critique supprimée.")
-    return redirect("posts:create_ticket")
+    return redirect("posts:feed")
 
 @login_required
 def feed(request):
@@ -136,4 +136,4 @@ def my_posts(request):
     tickets = Ticket.objects.filter(user=request.user)
     reviews = Review.objects.filter(user=request.user)
     posts = sorted(chain(tickets, reviews), key=lambda p: p.time_created, reverse=True)
-    return render(request, "posts/my_posts.html", {"posts": posts})
+    return render(request, "posts/mine.html", {"posts": posts})

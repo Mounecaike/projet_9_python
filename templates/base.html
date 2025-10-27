@@ -30,7 +30,27 @@
 {% endif %}
 
   <main>
+    {% if user.is_authenticated %}
+    <div class="nav-block">
+      <h2>LITReviews</h2>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="{% url 'posts:feed' %}">Flux</a></li>
+          <li><a href="{% url 'posts:mine' %}">Vos posts</a></li>
+          <li><a href="{% url 'follows:list_follows' %}">Abonnements</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    {% endif %}
     {% block content %}{% endblock %}
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-logout-nav">Se déconnecter</button>
+      </form>
+    {% endif %}
+
   </main>
 
   {% block scripts %}{% endblock %}
