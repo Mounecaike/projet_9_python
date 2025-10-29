@@ -3,11 +3,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
-
 from follows.models import UserFollows
 from .forms import TicketForm, ReviewForm
 from .models import Ticket, Review
 
+
+@login_required
 def create_ticket(request):
     if request.method == "POST":
         form = TicketForm(request.POST, request.FILES)
@@ -39,6 +40,7 @@ def update_ticket(request, pk):
 
     return render(request, "posts/update_ticket.html", {"form": form, "ticket": ticket})
 
+
 @login_required
 @require_POST
 def delete_ticket(request, pk):
@@ -47,6 +49,7 @@ def delete_ticket(request, pk):
         ticket.delete()
         messages.success(request, "Votre ticket a bien été supprimé")
     return redirect("posts:feed")
+
 
 @login_required
 def create_review(request, ticket_id):
@@ -65,6 +68,7 @@ def create_review(request, ticket_id):
         form = ReviewForm()
 
     return render(request, "posts/create_review.html", {"form": form, "ticket": ticket})
+
 
 @login_required
 def update_review(request, pk):
@@ -87,6 +91,7 @@ def update_review(request, pk):
         "ticket": review.ticket
     })
 
+
 @login_required
 @require_POST
 def delete_review(request, pk):
@@ -95,6 +100,7 @@ def delete_review(request, pk):
         review.delete()
         messages.success(request, "Critique supprimée.")
     return redirect("posts:feed")
+
 
 @login_required
 def feed(request):
@@ -110,6 +116,7 @@ def feed(request):
     )
 
     return render(request, "posts/feed.html", {"posts": posts})
+
 
 @login_required
 def create_review_from_ticket(request, ticket_id):
@@ -130,6 +137,7 @@ def create_review_from_ticket(request, ticket_id):
         "form": form,
         "ticket": ticket
     })
+
 
 @login_required
 def my_posts(request):

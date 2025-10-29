@@ -1,5 +1,5 @@
 """
-URL configuration for litrerevu project.
+URL configuration for litreviews project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -20,8 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 
+
 def home(request):
     return render(request, 'home.html')
+
 
 urlpatterns = [
     path("", home, name="home"),
@@ -35,4 +37,3 @@ urlpatterns = [
 # Pour servir les fichiers uploadés (images) en dev
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

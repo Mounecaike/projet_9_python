@@ -21,8 +21,8 @@ Projet réalisé dans le cadre du parcours **Développeur d’application Python
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/<votre-nom-utilisateur>/LITRevu.git
-cd LITRevu
+git clone https://github.com/<votre-nom-utilisateur>/LITReviews.git
+cd LITReviews
 python -m venv env
 env\Scripts\activate  # sous Windows
 pip install -r requirements.txt
@@ -42,6 +42,7 @@ LITRevu/
 ├── static/     # CSS
 └── manage.py
 ````
+---
 ## 🧠 Technologies
 - Python 3.13
 - Django 5.2

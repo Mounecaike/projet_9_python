@@ -6,7 +6,6 @@ from accounts.models import User
 from follows.models import UserFollows, UserBlock
 
 
-
 @login_required
 def list_follows(request):
     follows = UserFollows.objects.filter(user=request.user)
@@ -16,7 +15,8 @@ def list_follows(request):
         username = request.POST.get("username")
         try:
             followed_user = User.objects.get(username=username)
-            if followed_user != request.user and not UserFollows.objects.filter(user=request.user, followed_user=followed_user).exists():
+            if followed_user != request.user and not UserFollows.objects.filter(user=request.user,
+                                                                                followed_user=followed_user).exists():
                 UserFollows.objects.create(user=request.user, followed_user=followed_user)
                 messages.success(request, f"✅ Vous suivez maintenant {followed_user.username} !")
             else:
@@ -29,6 +29,7 @@ def list_follows(request):
         "blocked_users": blocked_users
     })
 
+
 @login_required
 @require_POST
 def delete_follow(request, pk):
@@ -37,6 +38,7 @@ def delete_follow(request, pk):
         follow.delete()
         messages.info(request, f"👋 Vous ne suivez plus {follow.followed_user.username}.")
     return redirect('follows:list_follows')
+
 
 @login_required
 @require_POST

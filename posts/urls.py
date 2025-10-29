@@ -9,8 +9,7 @@ urlpatterns = [
     path('mine/', views.my_posts, name='mine'),
     path('create/', views.create_ticket, name='create_ticket'),
     path('update/<int:pk>/', views.update_ticket, name='update_ticket'),
-    path('delete/<int:pk>/',views.delete_ticket, name='delete_ticket'),
+    path('delete/<int:pk>/', views.delete_ticket, name='delete_ticket'),
     path('review/create/<int:ticket_id>/', views.create_review, name='create_review'),
     path('review/from_ticket/<int:ticket_id>/', views.create_review_from_ticket, name='create_review_from_ticket'),
-
 ]
